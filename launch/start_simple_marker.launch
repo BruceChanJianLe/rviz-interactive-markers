@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node pkg="rviz-interactive-markers" type="simple_marker" name="simple_marker" output="screen">
+        <rosparam command="load" file="$(find rviz-interactive-markers)/config/simple_marker_params.yaml"/>
+    </node>
+
+</launch>
