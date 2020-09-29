@@ -1,6 +1,6 @@
 # RViz Interactive Markers
 
-This repository demonstarte the usage of rviz interactive markers. This ROS package rewrites the tutorial in cpp class form. For more information about interactive markers please visit this [page]http://wiki.ros.org/rviz/Tutorials).
+This repository demonstarte the usage of rviz interactive markers. This ROS package rewrites the tutorial in cpp class form. For more information about interactive markers please visit this [page](http://wiki.ros.org/rviz/Tutorials).
 
 
 ## Overview of Interactive Markers
