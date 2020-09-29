@@ -39,9 +39,9 @@ void simple_marker::start()
 
     // Define marker_msg_
     marker_msg_.type = visualization_msgs::Marker::CUBE;
-    marker_msg_.scale.x = 1.0;
-    marker_msg_.scale.y = 1.0;
-    marker_msg_.scale.z = 1.0;
+    marker_msg_.scale.x = 0.45;
+    marker_msg_.scale.y = 0.45;
+    marker_msg_.scale.z = 0.45;
     marker_msg_.color.r = 0.5;
     marker_msg_.color.g = 0.5;
     marker_msg_.color.b = 0.5;
