@@ -19,5 +19,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+# Generate dynamic reconfigure parameters in the 'cfg' folder
+generate_dynamic_reconfigure_options(
+  cfg/RVizInteractiveMarker.cfg
+)
+
 add_executable(simple_marker src/simple_marker_node.cpp src/simple_marker.cpp)
 target_link_libraries(simple_marker ${catkin_LIBRARIES})
+
+add_executable(baisc_control src/basic_control_node.cpp)
+target_link_libraries(baisc_control ${catkin_LIBRARIES})
