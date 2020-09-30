@@ -10,6 +10,12 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   tf
   visualization_msgs
+  dynamic_reconfigure
+)
+
+# Generate dynamic reconfigure parameters in the 'cfg' folder
+generate_dynamic_reconfigure_options(
+  cfg/RVizInteractiveMarker.cfg
 )
 
 catkin_package()
@@ -19,13 +25,12 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-# Generate dynamic reconfigure parameters in the 'cfg' folder
-generate_dynamic_reconfigure_options(
-  cfg/RVizInteractiveMarker.cfg
-)
-
 add_executable(simple_marker src/simple_marker_node.cpp src/simple_marker.cpp)
 target_link_libraries(simple_marker ${catkin_LIBRARIES})
 
 add_executable(baisc_control src/basic_control_node.cpp)
 target_link_libraries(baisc_control ${catkin_LIBRARIES})
+
+add_executable(display_interactive_markers src/display_int_markers.cpp src/display_int_markers_node.cpp)
+add_dependencies(display_interactive_markers ${PROJECT_NAME}_gencfg)
+target_link_libraries(display_interactive_markers ${catkin_LIBRARIES})
