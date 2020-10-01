@@ -179,6 +179,7 @@ namespace interactive_markers_ns
         switch(int_marker_mode_)
         {
             case 0:
+            {
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Free 6D Control";
                 int_marker_msg_.description = "Free Orientation";
@@ -232,8 +233,10 @@ namespace interactive_markers_ns
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                 break;
+            }
 
             case 1:
+            {
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Fixed 6D Control";
                 int_marker_msg_.description = "Fixed Orientation";
@@ -287,19 +290,39 @@ namespace interactive_markers_ns
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                 break;
+            }
 
             case 2:
+            {
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Random 6D Control";
                 int_marker_msg_.description = "Arbitary Axes";
 
                 // Display control
+                    // Use random engine to generate value between -1.0 to 1.0
+                    std::random_device rd;
+                    std::mt19937 eng(rd());
+                    std::uniform_real_distribution<> distr_double(-1.0, 1.0);
+
                     // Provide three random axis for rotate and translate
                     for(int i = 0; i < 3; i++)
                     {
-                        
+                        // Random rotate axis
+                        con_int_marker_msg_.name = "random_rotate_axis_" + std::to_string(i);
+                        con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::ROTATE_AXIS;
+                        con_int_marker_msg_.orientation.x = distr_double(eng);
+                        con_int_marker_msg_.orientation.y = distr_double(eng);
+                        con_int_marker_msg_.orientation.z = distr_double(eng);
+                        con_int_marker_msg_.orientation.w = distr_double(eng);
+                            // Attach random rotate axis
+                            int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+                        // Random translate axis
+                        con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_AXIS;
+                            // Attach random translate axis
+                            int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                     }
                 break;
+            }
 
             case 3:
                 // Define interactive marker name and description
