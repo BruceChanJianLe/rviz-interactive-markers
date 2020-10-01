@@ -294,6 +294,11 @@ namespace interactive_markers_ns
                 int_marker_msg_.description = "Arbitary Axes";
 
                 // Display control
+                    // Provide three random axis for rotate and translate
+                    for(int i = 0; i < 3; i++)
+                    {
+                        
+                    }
                 break;
 
             case 3:
