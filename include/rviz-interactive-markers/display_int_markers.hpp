@@ -10,6 +10,7 @@
 
 #include <string>
 #include <memory>
+#include <random>
 
 namespace interactive_markers_ns
 {
