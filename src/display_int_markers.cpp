@@ -325,10 +325,29 @@ namespace interactive_markers_ns
             }
 
             case 3:
+            {
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Quad Cop 6D Control";
                 int_marker_msg_.description = "Quadcopter";
+
+                // Display control
+                    // Quadcopter move rotate axis
+                    con_int_marker_msg_.name = "move_rotate_axis";
+                    con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_ROTATE;
+                    con_int_marker_msg_.orientation.x = 0.0;
+                    con_int_marker_msg_.orientation.y = 1.0;
+                    con_int_marker_msg_.orientation.z = 0.0;
+                    con_int_marker_msg_.orientation.w = 1.0;
+                        // Attach control to interactive marker
+                        int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                    // Quadcopter translate axis
+                    con_int_marker_msg_.name = "translate_axis";
+                    con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_AXIS;
+                        // Attach control to interactive marker
+                        int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                 break;
+            }
 
             case 4:
                 // Define interactive marker name and description
