@@ -232,6 +232,9 @@ namespace interactive_markers_ns
                     con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_AXIS;
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                    // Attach visual marker to interactive marker
+                    int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
                 break;
             }
 
@@ -289,6 +292,9 @@ namespace interactive_markers_ns
                     con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_AXIS;
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                    // Attach visual marker to interactive marker
+                    int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
                 break;
             }
 
@@ -321,6 +327,9 @@ namespace interactive_markers_ns
                             // Attach random translate axis
                             int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                     }
+
+                    // Attach visual marker to interactive marker
+                    int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
                 break;
             }
 
@@ -345,6 +354,9 @@ namespace interactive_markers_ns
                     con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_AXIS;
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                    // Attach visual marker to interactive marker
+                    int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
                 break;
             }
 
@@ -402,16 +414,43 @@ namespace interactive_markers_ns
                     con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_AXIS;
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                    // Attach visual marker to interactive marker
+                    int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
                 break;
             }
 
             case 5:
+            {
                 // Define interactive marker name and description
                 int_marker_msg_.name = "View Facing 6D 3D Control";
                 int_marker_msg_.description = "View-Facing";
+
+                // Display control
+                    // Control of rotates around the viewing axis
+                    con_int_marker_msg_.name = "rotate_viewing_face_control";
+                    con_int_marker_msg_.orientation_mode = visualization_msgs::InteractiveMarkerControl::VIEW_FACING;
+                    con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::ROTATE_AXIS;
+                    con_int_marker_msg_.orientation.w = 1;
+                        // Attach control to interactive marker
+                        int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                    // Control of translation around the viewing axis
+                    con_int_marker_msg_.name = "translate_viewing_face_control";
+                    con_int_marker_msg_.orientation_mode = visualization_msgs::InteractiveMarkerControl::VIEW_FACING;
+                    con_int_marker_msg_.orientation_mode = visualization_msgs::InteractiveMarkerControl::MOVE_PLANE;
+                    con_int_marker_msg_.independent_marker_orientation = true;
+                    con_int_marker_msg_.always_visible = true;
+                        // Attach visual marker to control marker (something different)
+                        con_int_marker_msg_.markers.emplace_back(viz_int_marker_msg_);
+                        // Attach control to interactive marker
+                        int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                 break;
+            }
 
             case 6:
+            {
+            }
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Planar 2D Control";
                 int_marker_msg_.description = "Chess Piece";
@@ -435,9 +474,6 @@ namespace interactive_markers_ns
                 int_marker_msg_.description = "Button";
                 break;
         }
-
-        // Attach visual marker to interactive marker
-        int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
 
         // Inseart interactive marker into the interactive marker server
         insert_int_marker();
