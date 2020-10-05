@@ -450,11 +450,28 @@ namespace interactive_markers_ns
 
             case 6:
             {
-            }
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Planar 2D Control";
                 int_marker_msg_.description = "Chess Piece";
+
+                // Display control
+                    // Planar movement control
+                    con_int_marker_msg_.name = "planar_control";
+                    con_int_marker_msg_.orientation.x = 0;
+                    con_int_marker_msg_.orientation.y = 1;
+                    con_int_marker_msg_.orientation.z = 0;
+                    con_int_marker_msg_.orientation.w = 1;
+                    con_int_marker_msg_.independent_marker_orientation = visualization_msgs::InteractiveMarkerControl::MOVE_PLANE;
+                        // Attach control to interactive marker
+                        int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                    // Prepare visualization marker to attach to control marker
+                    con_int_marker_msg_.markers.emplace_back(viz_int_marker_msg_);
+                    con_int_marker_msg_.always_visible = true;
+                        // Attach control marker with visualize marker in it to interactive marker
+                        int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                 break;
+            }
 
             case 7:
                 // Define interactive marker name and description
