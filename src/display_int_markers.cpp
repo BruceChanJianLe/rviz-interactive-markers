@@ -438,7 +438,7 @@ namespace interactive_markers_ns
                     // Control of translation around the viewing axis
                     con_int_marker_msg_.name = "translate_viewing_face_control";
                     con_int_marker_msg_.orientation_mode = visualization_msgs::InteractiveMarkerControl::VIEW_FACING;
-                    con_int_marker_msg_.orientation_mode = visualization_msgs::InteractiveMarkerControl::MOVE_PLANE;
+                    con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_PLANE;
                     con_int_marker_msg_.independent_marker_orientation = true;
                     con_int_marker_msg_.always_visible = true;
                         // Attach visual marker to control marker (something different)
@@ -474,10 +474,34 @@ namespace interactive_markers_ns
             }
 
             case 7:
+            {
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Pan Tilt";
                 int_marker_msg_.description = "Pan / Tilt";
+
+                // Display control
+                    // Pan control ??
+                    con_int_marker_msg_.name = "pan?";
+                    con_int_marker_msg_.orientation.x = 0;
+                    con_int_marker_msg_.orientation.y = 1;
+                    con_int_marker_msg_.orientation.z = 0;
+                    con_int_marker_msg_.orientation.w = 1;
+                    con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::ROTATE_AXIS;
+                    con_int_marker_msg_.orientation_mode = visualization_msgs::InteractiveMarkerControl::FIXED;
+                        // Attach control to interactive marker
+                        int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+                    // Tilt control ??
+                    con_int_marker_msg_.name = "tilt?";
+                    con_int_marker_msg_.orientation.x = 0;
+                    con_int_marker_msg_.orientation.y = 0;
+                    con_int_marker_msg_.orientation.z = 1;
+                    con_int_marker_msg_.orientation.w = 1;
+                    con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::ROTATE_AXIS;
+                    con_int_marker_msg_.orientation_mode = visualization_msgs::InteractiveMarkerControl::INHERIT;
+                        // Attach control to interactive marker
+                        int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                 break;
+            }
 
             case 8:
                 // Define interactive marker name and description
