@@ -40,10 +40,9 @@ namespace interactive_markers_ns
             int int_marker_mode_;
 
             // Private function
-            void attach_viz();
             void insert_int_marker();
             void remove_int_marker();
-            void display_int_marker();
+            void prepare_int_marker();
 
         public:
             // Constructor and destructor
