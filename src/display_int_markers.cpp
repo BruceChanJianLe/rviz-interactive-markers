@@ -124,7 +124,9 @@ namespace interactive_markers_ns
 
     void interactive_marker::remove_int_marker()
     {
-        ;
+        // Remove any inserted interactive markers
+        int_server_->clear();
+
     }
 
 
