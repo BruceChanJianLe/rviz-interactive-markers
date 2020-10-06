@@ -17,7 +17,9 @@ namespace interactive_markers_ns
 
     interactive_marker::interactive_marker(std::string server_name)
     :   int_server_(std::make_shared<interactive_markers::InteractiveMarkerServer>(server_name, "", false)),
-        dynamic_server_(std::make_shared<dynamic_reconfigure::Server<rviz_interactive_markers::RVizInteractiveMarkerConfig>> ())
+        dynamic_server_(std::make_shared<dynamic_reconfigure::Server<rviz_interactive_markers::RVizInteractiveMarkerConfig>> ()),
+        dynamic_callback_(true),
+        int_marker_mode_(0)
     {
         // Set callback function for dynamic reconfigure (using lambda)
         dynamic_server_->setCallback(
