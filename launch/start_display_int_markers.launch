@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node pkg="rviz-interactive-markers" type="display_interactive_markers" name="display_interactive_marker_node" output="screen">
+        <rosparam command="load" file="$(find rviz-interactive-markers)/config/display_int_markers_params.yaml"/>
+    </node>
+
+</launch>
