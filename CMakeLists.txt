@@ -31,6 +31,6 @@ target_link_libraries(simple_marker ${catkin_LIBRARIES})
 add_executable(baisc_control src/basic_control_node.cpp)
 target_link_libraries(baisc_control ${catkin_LIBRARIES})
 
-add_executable(display_interactive_markers src/display_int_markers.cpp src/display_int_markers_node.cpp)
+add_executable(display_interactive_markers src/display_int_markers_node.cpp src/display_int_markers.cpp)
 add_dependencies(display_interactive_markers ${PROJECT_NAME}_gencfg)
 target_link_libraries(display_interactive_markers ${catkin_LIBRARIES})
