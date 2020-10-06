@@ -438,7 +438,7 @@ namespace interactive_markers_ns
                     con_int_marker_msg_.independent_marker_orientation = true;
                     con_int_marker_msg_.always_visible = true;
                         // Attach visual marker to control marker (something different)
-                        con_int_marker_msg_.markers.emplace_back(viz_int_marker_msg_);
+                        con_int_marker_msg_.markers.emplace_back(marker_msg_);
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                 break;
@@ -462,7 +462,7 @@ namespace interactive_markers_ns
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
 
                     // Prepare visualization marker to attach to control marker
-                    con_int_marker_msg_.markers.emplace_back(viz_int_marker_msg_);
+                    con_int_marker_msg_.markers.emplace_back(marker_msg_);
                     con_int_marker_msg_.always_visible = true;
                         // Attach control marker with visualize marker in it to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
