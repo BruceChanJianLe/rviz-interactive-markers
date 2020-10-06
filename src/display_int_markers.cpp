@@ -106,9 +106,10 @@ namespace interactive_markers_ns
                     break;
                 }
 
-                // 'commit' changes and send to all clients (client = RViz)
-                this->int_server_->applyChanges();
             });
+
+            // 'commit' changes and send to all clients (client = RViz)
+            this->int_server_->applyChanges();
 
         // Method 2
             // Insert the defined interactive marker to the server (you may set the callback in this method)
@@ -536,8 +537,13 @@ namespace interactive_markers_ns
             // Check if interactive marker is updated
             if(dynamic_callback_)
             {
+                // Remove current interactive marker
                 remove_int_marker();
+                // Prepare and insert selected interactive marker
                 prepare_int_marker();
+
+                // Wait for next callback
+                dynamic_callback_ = false;
             }
 
             // ROS spin
@@ -547,63 +553,5 @@ namespace interactive_markers_ns
             r.sleep();
         }
 
-
-        // // Testing definition
-        // visualization_msgs::InteractiveMarker int_marker_msg_;
-        // visualization_msgs::Marker marker_msg_;
-        // visualization_msgs::InteractiveMarkerControl viz_int_marker_msg_;
-        // visualization_msgs::InteractiveMarkerControl con_int_marker_msg_;
-
-        // // Define interactive int_marker_msg_
-        // int_marker_msg_.header.frame_id = frame_id_;
-        // int_marker_msg_.header.stamp = ros::Time::now();
-        // int_marker_msg_.name = "simple_marker";
-        // int_marker_msg_.description = "Simple 1-DOF Control";
-
-        // // Define marker_msg_
-        // marker_msg_.type = visualization_msgs::Marker::CUBE;
-        // marker_msg_.scale.x = 0.45;
-        // marker_msg_.scale.y = 0.45;
-        // marker_msg_.scale.z = 0.45;
-        // marker_msg_.color.r = 0.5;
-        // marker_msg_.color.g = 0.5;
-        // marker_msg_.color.b = 0.5;
-        // marker_msg_.color.a = 1.0;
-
-        // // Define visualization for interactive marker
-        // viz_int_marker_msg_.always_visible = true;
-        // viz_int_marker_msg_.markers.emplace_back(marker_msg_);
-
-        // // Add visualization to interactive marker msg
-        // int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
-
-        // // Define control for interactive marker
-        // con_int_marker_msg_.name = "move_x";
-        // con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_AXIS;
-
-        // // Add control to interactive marker msg
-        // int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
-
-        // // Insert interactive marker msg t server
-        // int_server_->insert(int_marker_msg_,
-        // [](const visualization_msgs::InteractiveMarkerFeedbackConstPtr & feedback)
-        // {
-        //     ROS_INFO_STREAM("\n" << feedback->marker_name << 
-        //                     " is now at " << feedback->pose.position.x <<
-        //                     ", " << feedback->pose.position.y <<
-        //                     ", " << feedback->pose.position.z
-        //                     );
-        // });
-
-        // // 'commit' changes and send to all clients
-        // int_server_->applyChanges();
-
-        // while (private_nh_.ok())
-        // {
-        //     // Allow callbacks
-        //     ros::spinOnce();
-        //     // Let node sleep
-        //     r.sleep();
-        // }
     }
 };
