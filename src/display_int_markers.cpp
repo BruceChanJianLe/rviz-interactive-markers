@@ -35,12 +35,6 @@ namespace interactive_markers_ns
     }
 
 
-    void interactive_marker::attach_viz()
-    {
-        ;
-    }
-
-
     void interactive_marker::insert_int_marker()
     {
 
@@ -134,7 +128,7 @@ namespace interactive_markers_ns
     }
 
 
-    void interactive_marker::display_int_marker()
+    void interactive_marker::prepare_int_marker()
     {
         // Set interactive marker tf frame
         int_marker_msg_.header.frame_id = frame_id_;
@@ -504,16 +498,21 @@ namespace interactive_markers_ns
             }
 
             case 8:
+            {
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Context Menu";
                 int_marker_msg_.description = "Context Menu";
                 break;
+            }
 
             case 9:
+            {
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Button";
                 int_marker_msg_.description = "Button";
                 break;
+            }
+
         }
 
         // Inseart interactive marker into the interactive marker server
@@ -534,12 +533,8 @@ namespace interactive_markers_ns
             if(dynamic_callback_)
             {
                 remove_int_marker();
+                prepare_int_marker();
             }
-            else
-            {
-                display_int_marker();
-            }
-            
 
             // ROS spin
             ros::spinOnce();
