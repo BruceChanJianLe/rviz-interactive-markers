@@ -141,14 +141,6 @@ namespace interactive_markers_ns
         // Set interactive marker scale
         int_marker_msg_.scale = 1;
 
-        // int_marker_msg_.pose.position.x = 0.0;
-        // int_marker_msg_.pose.position.y = 0.0;
-        // int_marker_msg_.pose.position.z = 0.0;
-        // int_marker_msg_.pose.orientation.x = 0.0;
-        // int_marker_msg_.pose.orientation.y = 0.0;
-        // int_marker_msg_.pose.orientation.z = 0.0;
-        // int_marker_msg_.pose.orientation.w = 0.0;
-
         // Clear interactive marker controller's vector
         int_marker_msg_.controls.clear();
 
@@ -460,7 +452,7 @@ namespace interactive_markers_ns
                     con_int_marker_msg_.orientation.y = 1;
                     con_int_marker_msg_.orientation.z = 0;
                     con_int_marker_msg_.orientation.w = 1;
-                    con_int_marker_msg_.independent_marker_orientation = visualization_msgs::InteractiveMarkerControl::MOVE_PLANE;
+                    con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_PLANE;
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
 
@@ -499,6 +491,9 @@ namespace interactive_markers_ns
                     con_int_marker_msg_.orientation_mode = visualization_msgs::InteractiveMarkerControl::INHERIT;
                         // Attach control to interactive marker
                         int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                    // Attach visual marker to interactive marker
+                    int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
                 break;
             }
 
