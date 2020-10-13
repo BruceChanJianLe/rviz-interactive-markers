@@ -14,3 +14,28 @@ They are represented by the [visualization_msgs/InteractiveMarker](http://docs.r
 If you want to create a node providing a set of interactive markers, you need to instantiate an InteractiveMarkerServer object. This will handle the connection to the client (usually RViz) and make sure that all changes you make are being transmitted and that your application is being notified of all the actions the user performs on the interactive markers.  
 
 ![img](http://wiki.ros.org/rviz/Tutorials/Interactive%20Markers:%20Getting%20Started?action=AttachFile&do=get&target=interactive_marker_architecture.png)  
+
+
+## Interactive Marker Selection
+
+You may have your own combination of interactive marker based on your own preference. Below are some of the combination of interactive markers introduced in the tutorial.  
+
+### Free Orientation
+
+### Fixed Orientation
+
+### Arbitrary Axes
+
+### Quadcopter
+
+### 3D Motion with mouse
+
+### View Facing
+
+### Chess Piece
+
+### Pan / Tilt
+
+### Context Menu
+
+### Button
