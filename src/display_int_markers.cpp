@@ -144,7 +144,6 @@ namespace interactive_markers_ns
 
         // Remove menu handler definition
         menu_handler_.reset(new interactive_markers::MenuHandler ());
-        // menu_handler_.reset();
 
     }
 
@@ -304,7 +303,7 @@ namespace interactive_markers_ns
                     int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
 
                     // Apply Menu Handler to escape from click error (not needed if viz_marker_msg_.interaction_mode == visualization_msgs::InteractiveMarkerControl::NONE)
-                    menu_handler_->apply(* int_server_, int_marker_msg_.name);
+                    // menu_handler_->apply(* int_server_, int_marker_msg_.name);
                     menu_marker_ = true;
                 break;
             }
