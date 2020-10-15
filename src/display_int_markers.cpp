@@ -18,8 +18,10 @@ namespace interactive_markers_ns
     interactive_marker::interactive_marker(std::string server_name)
     :   int_server_(std::make_shared<interactive_markers::InteractiveMarkerServer>(server_name, "", false)),
         dynamic_server_(std::make_shared<dynamic_reconfigure::Server<rviz_interactive_markers::RVizInteractiveMarkerConfig>> ()),
+        menu_handler_(std::make_shared<interactive_markers::MenuHandler> ()),
         dynamic_callback_(true),
-        int_marker_mode_(0)
+        int_marker_mode_(0),
+        menu_marker_(false)
     {
         // Set callback function for dynamic reconfigure (using lambda)
         dynamic_server_->setCallback(
@@ -108,6 +110,16 @@ namespace interactive_markers_ns
 
             });
 
+            // Apply Menu Handler
+            if(menu_marker_)
+            {
+                // Apply Menu Handle
+                menu_handler_->apply(* int_server_, int_marker_msg_.name);
+
+                // Reset Menu Marker flag
+                menu_marker_ = false;
+            }
+
             // 'commit' changes and send to all clients (client = RViz)
             this->int_server_->applyChanges();
 
@@ -129,6 +141,10 @@ namespace interactive_markers_ns
     {
         // Remove any inserted interactive markers
         int_server_->clear();
+
+        // Remove menu handler definition
+        menu_handler_.reset(new interactive_markers::MenuHandler ());
+        // menu_handler_.reset();
 
     }
 
@@ -286,6 +302,10 @@ namespace interactive_markers_ns
 
                     // Attach visual marker to interactive marker
                     int_marker_msg_.controls.emplace_back(viz_int_marker_msg_);
+
+                    // Apply Menu Handler to escape from click error (not needed if viz_marker_msg_.interaction_mode == visualization_msgs::InteractiveMarkerControl::NONE)
+                    menu_handler_->apply(* int_server_, int_marker_msg_.name);
+                    menu_marker_ = true;
                 break;
             }
 
@@ -502,6 +522,46 @@ namespace interactive_markers_ns
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Context Menu";
                 int_marker_msg_.description = "Context Menu";
+
+                // Define Lambda function for callback
+                auto menu_callback = [](const visualization_msgs::InteractiveMarkerFeedbackConstPtr & feedback)
+                {
+                    // Create a string to hold message
+                    std::string message;
+
+                    // Obtain marker name and control name
+                    message = "\nMarker Name: " + feedback->marker_name +
+                            "\nControl Method: " + feedback->control_name;
+
+                    if(feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
+                    {
+                        ROS_INFO_STREAM(
+                            message << "\nEvent Type: menu item" <<
+                            "\nMenu Entry: " << feedback->menu_entry_id
+                        );
+                    }
+
+                };
+
+                // Menu setup
+                menu_handler_->insert("First Entry", menu_callback);    // You will need ampersand if you are not using lambda
+                menu_handler_->insert("Second Entry", menu_callback);
+                // sub_menu_handler_ = std::make_shared<interactive_markers::MenuHandler::EntryHandle> (menu_handler_->insert("Submenu"));
+                interactive_markers::MenuHandler::EntryHandle sub_menu_handler_ = menu_handler_->insert("Submenu");
+                menu_handler_->insert(sub_menu_handler_, "First Entry", menu_callback);
+                menu_handler_->insert(sub_menu_handler_, "Second Entry", menu_callback);
+
+                // Display control
+                con_int_marker_msg_.name = "menu_control";
+                con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::MENU;
+                con_int_marker_msg_.always_visible = true;
+                    // Attach visual marker to control marker
+                    con_int_marker_msg_.markers.emplace_back(marker_msg_);
+                    // Attach control to interactive marker
+                    int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
+
+                // Flag to process menu marker
+                menu_marker_ = true;
                 break;
             }
 

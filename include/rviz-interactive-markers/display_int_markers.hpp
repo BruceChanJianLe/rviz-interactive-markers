@@ -6,7 +6,7 @@
 #include <dynamic_reconfigure/server.h>
 #include <rviz-interactive-markers/RVizInteractiveMarkerConfig.h>
 #include <interactive_markers/interactive_marker_server.h>
-// #include <interactive_markers/menu_handler.h>
+#include <interactive_markers/menu_handler.h>
 
 #include <string>
 #include <memory>
@@ -27,6 +27,10 @@ namespace interactive_markers_ns
             // Dynamic reconfigure handle
             std::shared_ptr<dynamic_reconfigure::Server<rviz_interactive_markers::RVizInteractiveMarkerConfig>> dynamic_server_;
 
+            // Menu handler
+            std::shared_ptr<interactive_markers::MenuHandler> menu_handler_;
+            std::shared_ptr<interactive_markers::MenuHandler::EntryHandle> sub_menu_handler_;
+
             // Private variable
             visualization_msgs::InteractiveMarker int_marker_msg_;
             visualization_msgs::Marker marker_msg_;
@@ -38,6 +42,7 @@ namespace interactive_markers_ns
             int rate_;
             bool dynamic_callback_;
             int int_marker_mode_;
+            bool menu_marker_;
 
             // Private function
             void insert_int_marker();
