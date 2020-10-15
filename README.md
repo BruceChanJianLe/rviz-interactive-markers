@@ -36,6 +36,6 @@ You may have your own combination of interactive marker based on your own prefer
 
 ### Pan / Tilt
 
-### Context Menu
+### Context Menu (Right Click)
 
 ### Button
