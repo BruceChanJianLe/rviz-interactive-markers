@@ -20,6 +20,19 @@ If you want to create a node providing a set of interactive markers, you need to
 
 You may have your own combination of interactive marker based on your own preference. Below are some of the combination of interactive markers introduced in the tutorial.  
 
+**Steps to setup interactive markers:**
+- Create interactive marker message (visualization_msgs::InteractiveMarker int_marker_msg_)
+    - Define int_marker_msg_.header.frame_id (map)
+    - Define scale (1)
+- Create a normal marker message (visualization_msgs::Marker marker_msg_)
+    - Define marker_msg_.type (visualization_msgs::Marker::CUBE)
+    - Define marker_msg_.scale (x, y, z; 0.45, 0.45, 0.45)
+    - Define marker_msg_.color (r, g, b, a; 0.5, 0.5, 0.5, 1.0)
+- Create a visualization message (visualization_msgs::InteractiveMarkerControl viz_int_marker_msg_)
+    - Define viz_int_marker_msg_.always_visible (true)
+- Create a control message (visualization_msgs::InteractiveMarkerControl con_int_marker_msg_)
+
+
 ### Free Orientation
 
 ### Fixed Orientation
