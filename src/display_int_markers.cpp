@@ -569,6 +569,15 @@ namespace interactive_markers_ns
                 // Define interactive marker name and description
                 int_marker_msg_.name = "Button";
                 int_marker_msg_.description = "Button";
+
+                // Display control
+                con_int_marker_msg_.name = "control_button";
+                con_int_marker_msg_.interaction_mode = visualization_msgs::InteractiveMarkerControl::BUTTON;
+                con_int_marker_msg_.always_visible = true;
+                    // Attach visual marker to control marker
+                    con_int_marker_msg_.markers.emplace_back(marker_msg_);
+                    // Attach control to interactive marker
+                    int_marker_msg_.controls.emplace_back(con_int_marker_msg_);
                 break;
             }
 
