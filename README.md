@@ -35,6 +35,8 @@ You may have your own combination of interactive marker based on your own prefer
 - Insert interactive markers into interactive marker server (int_server_->insert(int_marker_msg_, \<lambda function\>)
 - Commit and apply changes (int_server_->applyChanges())
 
+**REMEMBER** to add `ros::spin()` or `ros::spinOnce()` in order for the interactive server to work. If not you may encounter look up error.  
+
 
 Below is an example with free orientation.  
 
