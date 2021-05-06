@@ -223,3 +223,24 @@ int_marker_msg_.scale = 1;
 ### Context Menu (Right Click)
 
 ### Button
+
+## Error
+
+```bash
+CMakeFiles/gravity.dir/src/approach.cpp.o: In function `explore::Explore::setup_gravity_point_marker()':
+approach.cpp:(.text+0x343a): undefined reference to `interactive_markers::InteractiveMarkerServer::insert(visualization_msgs::InteractiveMarker_<std::allocator<void> > const&, boost::function<void (boost::shared_ptr<visualization_msgs::InteractiveMarkerFeedback_<std::allocator<void> > const> const&)>, unsigned char)'
+approach.cpp:(.text+0x3466): undefined reference to `interactive_markers::InteractiveMarkerServer::applyChanges()'
+CMakeFiles/gravity.dir/src/approach.cpp.o: In function `void __gnu_cxx::new_allocator<interactive_markers::InteractiveMarkerServer>::construct<interactive_markers::InteractiveMarkerServer, char const (&) [14], char const (&) [1], bool>(interactive_markers::InteractiveMarkerServer*, char const (&) [14], char const (&) [1], bool&&)':
+approach.cpp:(.text._ZN9__gnu_cxx13new_allocatorIN19interactive_markers23InteractiveMarkerServerEE9constructIS2_JRA14_KcRA1_S5_bEEEvPT_DpOT0_[_ZN9__gnu_cxx13new_allocatorIN19interactive_markers23InteractiveMarkerServerEE9constructIS2_JRA14_KcRA1_S5_bEEEvPT_DpOT0_]+0xfb): undefined reference to `interactive_markers::InteractiveMarkerServer::InteractiveMarkerServer(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)'
+CMakeFiles/gravity.dir/src/approach.cpp.o: In function `void __gnu_cxx::new_allocator<interactive_markers::InteractiveMarkerServer>::destroy<interactive_markers::InteractiveMarkerServer>(interactive_markers::InteractiveMarkerServer*)':
+approach.cpp:(.text._ZN9__gnu_cxx13new_allocatorIN19interactive_markers23InteractiveMarkerServerEE7destroyIS2_EEvPT_[_ZN9__gnu_cxx13new_allocatorIN19interactive_markers23InteractiveMarkerServerEE7destroyIS2_EEvPT_]+0x18): undefined reference to `interactive_markers::InteractiveMarkerServer::~InteractiveMarkerServer()'
+collect2: error: ld returned 1 exit status
+m-explore/explore/CMakeFiles/gravity.dir/build.make:217: recipe for target '/home/chanjl/temp_ws/devel/lib/explore_lite/gravity' failed
+make[2]: *** [/home/chanjl/temp_ws/devel/lib/explore_lite/gravity] Error 1
+CMakeFiles/Makefile2:23998: recipe for target 'm-explore/explore/CMakeFiles/gravity.dir/all' failed
+make[1]: *** [m-explore/explore/CMakeFiles/gravity.dir/all] Error 2
+Makefile:140: recipe for target 'all' failed
+make: *** [all] Error 2
+```
+
+This error states that there is interactive marker constructor cannot be found. Most likely, you did not specify it in the `CMakeLists.txt` as required component. Please check your `CMakeLists.txt` and make sure all the specify dependencies in `package.xml` is in `find_package` and `catkin_package`.
