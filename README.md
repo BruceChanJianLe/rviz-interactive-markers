@@ -49,6 +49,11 @@ int_marker_msg_.header.frame_id = frame_id_;
 // Set interactive marker scale
 int_marker_msg_.scale = 1;
 
+// Set interactive marker position, Note that visual marker and interactive marker position can be different
+int_marker_msg_.pose.position.x = 0.0;
+int_marker_msg_.pose.position.y = 0.0;
+int_marker_msg_.pose.position.z = 0.0;
+
 // Prepare visual marker for interactive marker
 
     // Marker visual
