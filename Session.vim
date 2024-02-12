@@ -13,22 +13,26 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +275 ~/ros1_ws/src/rviz-interactive-markers/src/int_marker.cpp
-badd +42 ~/ros1_ws/src/rviz-interactive-markers/include/rviz-interactive-markers/int_marker.hpp
-badd +1 ~/ros1_ws/src/rviz-interactive-markers/src/int_marker_node.cpp
-badd +2 ~/ros1_ws/src/rviz-interactive-markers/config/simple_marker_params.yaml
+badd +40 ~/ros1_ws/src/rviz-interactive-markers/src/int_marker.cpp
+badd +50 ~/ros1_ws/src/rviz-interactive-markers/include/rviz-interactive-markers/int_marker.hpp
 badd +2 ~/ros1_ws/src/rviz-interactive-markers/config/int_marker.yaml
 badd +6 ~/ros1_ws/src/rviz-interactive-markers/launch/start_int_marker.launch
 badd +38 ~/ros1_ws/src/rviz-interactive-markers/src/display_int_markers.cpp
 badd +15 ~/ros1_ws/src/rviz-interactive-markers/src/display_int_markers_node.cpp
-badd +10 ~/ros1_ws/src/rviz-interactive-markers/README.md
+badd +0 ./
+badd +1 ~/ros1_ws/src/rviz-interactive-markers/config/display_int_markers_params.yaml
+badd +0 fugitive:///home/brina/ros1_ws/src/rviz-interactive-markers/.git//
 argglobal
 %argdel
 $argadd ./
-edit ~/ros1_ws/src/rviz-interactive-markers/README.md
+edit ~/ros1_ws/src/rviz-interactive-markers/src/int_marker.cpp
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
 wincmd t
@@ -38,8 +42,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
+wincmd =
 argglobal
-balt ~/ros1_ws/src/rviz-interactive-markers/src/int_marker.cpp
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -50,12 +54,35 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 10 - ((9 * winheight(0) + 25) / 51)
+let s:l = 271 - ((13 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 10
+keepjumps 271
 normal! 0
+wincmd w
+argglobal
+if bufexists(fnamemodify("fugitive:///home/brina/ros1_ws/src/rviz-interactive-markers/.git//", ":p")) | buffer fugitive:///home/brina/ros1_ws/src/rviz-interactive-markers/.git// | else | edit fugitive:///home/brina/ros1_ws/src/rviz-interactive-markers/.git// | endif
+if &buftype ==# 'terminal'
+  silent file fugitive:///home/brina/ros1_ws/src/rviz-interactive-markers/.git//
+endif
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 12) / 24)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 1
+normal! 0
+wincmd w
+2wincmd w
+wincmd =
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

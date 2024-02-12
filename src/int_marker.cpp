@@ -41,7 +41,7 @@ namespace interaction
     }
 
 
-    display_loop_ = pnh_.createTimer(ros::Duration{UPDATE_RATE}, [this](const ros::TimerEvent &){ this->displayLoop(); });
+    display_loop_ = pnh_.createTimer(ros::Duration{UPDATE_RATE}, [this](const ros::TimerEvent &){ displayLoop(); });
   }
 
   IntHandler::~IntHandler()
@@ -94,10 +94,12 @@ namespace interaction
     int_marker.name = "marker_" + std::to_string(marker_idx_);
     int_marker.description = "marker_" + std::to_string(marker_idx_);
     int_srv_->insert(int_marker);
+    int index = marker_idx_;
     int_srv_->setCallback(
         int_marker.name,
-        [this](const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback){ this->markerCallback(feedback, marker_idx_); }
+        [this, index](const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback){ markerCallback(feedback, index); }
       );
+    marker_contexts_.emplace_back(int_marker.pose.position.x, int_marker.pose.position.y);
     marker_idx_++;
   }
 
@@ -137,7 +139,7 @@ namespace interaction
     // int_marker.description = "follow_me_" + std::to_string(marker_idx_);
     int_srv_->insert(int_marker,
         [this](const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
-        { this->splitMarkerCallback(feedback, 0); }
+        { splitMarkerCallback(feedback, 0); }
       );
     marker_contexts_.emplace_back(int_marker.pose.position.x, int_marker.pose.position.y);
 
@@ -201,7 +203,7 @@ namespace interaction
     int_marker.pose = marker.pose;
     int_srv_->insert(int_marker,
         [this](const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
-        { this->followMeMarkerCallback(feedback, 0); }
+        { followMeMarkerCallback(feedback, 0); }
       );
     marker_contexts_.emplace_back(int_marker.pose.position.x, int_marker.pose.position.y);
 
@@ -211,7 +213,7 @@ namespace interaction
     int_marker.pose.position.y += 1.0;
     int_srv_->insert(int_marker,
         [this](const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
-        { this->followMeMarkerCallback(feedback, 1); }
+        { followMeMarkerCallback(feedback, 1); }
       );
     marker_contexts_.emplace_back(int_marker.pose.position.x, int_marker.pose.position.y);
 
@@ -264,7 +266,32 @@ namespace interaction
 
   void IntHandler::markerCallback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback, int marker_idx)
   {
-    marker_contexts_.emplace_back();
+    // Update pose
+    geometry_msgs::Pose pose = feedback->pose;
+
+    switch (marker_idx)
+    {
+      case 0:
+        pose.position.x = marker_contexts_[1].x = pose.position.x + 1.0;
+        pose.position.y = marker_contexts_[1].y = pose.position.y + 1.0;
+        int_srv_->setPose("marker_" + std::to_string(1), pose);
+        break;
+
+      case 1:
+        pose.position.x = marker_contexts_[0].x = pose.position.x - 1.0;
+        pose.position.y = marker_contexts_[0].y = pose.position.y - 1.0;
+        int_srv_->setPose("marker_" + std::to_string(0), pose);
+        break;
+    }
+
+    if (visualization_msgs::InteractiveMarkerFeedback::MOUSE_DOWN == feedback->event_type)
+    {
+      marker_contexts_[marker_idx].is_active = true;
+    }
+    if (visualization_msgs::InteractiveMarkerFeedback::MOUSE_UP == feedback->event_type)
+    {
+      marker_contexts_[marker_idx].is_active = false;
+    }
   }
 
   void IntHandler::splitMarkerCallback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback, const int marker_idx)
