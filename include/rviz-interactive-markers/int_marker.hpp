@@ -48,9 +48,12 @@ namespace interaction
 
     // Private methods
     void addNodeMarker();
+    void addSplitNodeMarker();
     void addFollowMeNodeMarker();
     void displayLoop();
-    void markerCallback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback, int marked_idx);
+    void markerCallback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback, int marker_idx);
+    void splitMarkerCallback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback, const int marker_idx);
+    void followMeMarkerCallback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback, const int marker_idx);
   };
 
 } // interaction
