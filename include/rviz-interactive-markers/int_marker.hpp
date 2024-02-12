@@ -6,7 +6,6 @@
 #define _RVIZ_INTERACTIVE_MARKERS_INT_MARKER_HPP_
 
 // ROS
-#include "visualization_msgs/InteractiveMarkerFeedback.h"
 #include <ros/ros.h>
 #include <interactive_markers/interactive_marker_server.h>
 
@@ -34,6 +33,7 @@ namespace interaction
     std::shared_ptr<interactive_markers::InteractiveMarkerServer> int_srv_;
 
     std::string frame_id_;
+    int marker_style_;
 
     int marker_idx_;
     struct MarkerContext

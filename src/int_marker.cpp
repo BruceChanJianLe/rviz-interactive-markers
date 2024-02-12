@@ -7,20 +7,39 @@ namespace interaction
     , pnh_{"~"}
     , int_srv_{std::make_shared<interactive_markers::InteractiveMarkerServer>(ros::this_node::getName(), pnh_.getNamespace(), false)}
     , frame_id_{"map"}
+    , marker_style_{0}
     , marker_idx_{0}
   {
     // Load ROS Params
     pnh_.param<std::string>("frame_id", frame_id_, "map");
+    pnh_.param("marker_style", marker_style_, 2);
 
-    // Uncomment this block (1)
-    // addNodeMarker();
-    // addNodeMarker(); // Add to determine whether other markers will disappear while dragging
+    if (marker_style_ > 2 || marker_style_ < 0)
+    {
+      ROS_WARN_STREAM("Marker style can only be in between 0 - 2");
+      marker_style_ = 3;
+    }
 
-    // Uncomment this block (2)
-    // addSplitNodeMarker();
+    switch (marker_style_)
+    {
+      case 0:
+        addNodeMarker();
+        addNodeMarker(); // Add to determine whether other markers will disappear while dragging
+        break;
 
-    // Uncomment this block (3)
-    addFollowMeNodeMarker();
+      case 1:
+        addSplitNodeMarker();
+        break;
+
+      case 2:
+        addFollowMeNodeMarker();
+        break;
+
+      default:
+        addFollowMeNodeMarker();
+        break;
+    }
+
 
     display_loop_ = pnh_.createTimer(ros::Duration{UPDATE_RATE}, [this](const ros::TimerEvent &){ this->displayLoop(); });
   }
@@ -254,7 +273,7 @@ namespace interaction
     geometry_msgs::Pose pose = feedback->pose;
     marker_contexts_[marker_idx].x = pose.position.x;
     marker_contexts_[marker_idx].y = pose.position.y;
-    int_srv_->setPose("follow_me_" + std::to_string(marker_idx) + "_display", pose);
+    int_srv_->setPose("split_marker_" + std::to_string(marker_idx) + "_display", pose);
 
     if (visualization_msgs::InteractiveMarkerFeedback::MOUSE_DOWN == feedback->event_type)
     {

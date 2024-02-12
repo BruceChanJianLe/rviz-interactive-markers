@@ -234,6 +234,7 @@ int_marker_msg_.pose.position.z = 0.0;
 ## Minimal Interactive Marker Example
 
 Please refer to `addNodeMarker()` inside of `int_marker.cpp`.
+
 ## Other Interactive Marker Example
 
 Split interaction marker and display marker.
