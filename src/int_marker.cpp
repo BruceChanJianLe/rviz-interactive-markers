@@ -1,4 +1,5 @@
 #include "rviz-interactive-markers/int_marker.hpp"
+#include "visualization_msgs/InteractiveMarkerControl.h"
 
 namespace interaction
 {
@@ -12,6 +13,7 @@ namespace interaction
     // Load ROS Params
     pnh_.param<std::string>("frame_id", frame_id_, "map");
 
+    // Uncomment this block
     addNodeMarker();
     addNodeMarker(); // Add to determine whether other markers will disappear while dragging
 
@@ -39,9 +41,9 @@ namespace interaction
     control.always_visible = true;
     control.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_PLANE;
     control.orientation.x = 0.0;
-    control.orientation.y = 0.5;
+    control.orientation.y = std::sqrt(1.f/2.f);
     control.orientation.z = 0.0;
-    control.orientation.w = 0.5;
+    control.orientation.w = std::sqrt(1.f/2.f);
 
     // Add a visualiazation marker
     visualization_msgs::Marker marker;
@@ -77,7 +79,30 @@ namespace interaction
 
   void IntHandler::addFollowMeNodeMarker()
   {
-    ;
+    visualization_msgs::InteractiveMarker int_marker;
+    int_marker.header.frame_id = frame_id_;
+
+    // Add a control marker
+    visualization_msgs::InteractiveMarkerControl control;
+    control.always_visible = false;
+    control.interaction_mode = visualization_msgs::InteractiveMarkerControl::MOVE_PLANE;
+
+    visualization_msgs::Marker marker;
+    marker.type = visualization_msgs::Marker::SPHERE;
+    marker.color.r = 1.0;
+    marker.color.a = 1.0;
+    marker.scale.x = 0.45;
+    marker.scale.y = 0.45;
+    marker.scale.z = 0.45;
+    marker.pose.position.x = 0;
+    marker.pose.position.y = 0;
+    marker.pose.position.z = 0;
+    marker.pose.orientation.x = 0;
+    marker.pose.orientation.y = 0;
+    marker.pose.orientation.z = 0;
+    marker.pose.orientation.w = 1.0;
+
+    // co;
   }
 
   void IntHandler::displayLoop()
