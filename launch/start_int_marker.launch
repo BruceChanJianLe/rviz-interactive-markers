@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Another Interactive Markers Example -->
+    <node pkg="rviz-interactive-markers" type="int_marker" name="int_marker_node" output="screen">
+        <rosparam command="load" file="$(find rviz-interactive-markers)/config/int_marker.yaml"/>
+    </node>
+
+    <!-- Run RViz -->
+    <node pkg="rviz" type="rviz" name="rviz" output="screen" args="-d $(find rviz-interactive-markers)/rviz/config_int_marker.rviz"/>
+
+</launch>

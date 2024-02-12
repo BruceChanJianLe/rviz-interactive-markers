@@ -3,6 +3,7 @@ project(rviz-interactive-markers)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(catkin REQUIRED COMPONENTS
   interactive_markers
@@ -34,3 +35,6 @@ target_link_libraries(simple_marker ${catkin_LIBRARIES})
 add_executable(display_interactive_markers src/display_int_markers_node.cpp src/display_int_markers.cpp)
 add_dependencies(display_interactive_markers ${PROJECT_NAME}_gencfg)
 target_link_libraries(display_interactive_markers ${catkin_LIBRARIES})
+
+add_executable(int_marker src/int_marker_node.cpp src/int_marker.cpp)
+target_link_libraries(int_marker ${catkin_LIBRARIES})

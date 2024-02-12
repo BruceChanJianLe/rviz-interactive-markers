@@ -231,8 +231,16 @@ int_marker_msg_.pose.position.z = 0.0;
 
 ### Button
 
+## Minimal Interactive Marker Example
+
+Please refer to `addNodeMarker()` inside of `int_marker.cpp`.
+## Other Interactive Marker Example
+
+Split interaction marker and display marker.
+
 ## Error
 
+- Compile Error
 ```bash
 CMakeFiles/gravity.dir/src/approach.cpp.o: In function `explore::Explore::setup_gravity_point_marker()':
 approach.cpp:(.text+0x343a): undefined reference to `interactive_markers::InteractiveMarkerServer::insert(visualization_msgs::InteractiveMarker_<std::allocator<void> > const&, boost::function<void (boost::shared_ptr<visualization_msgs::InteractiveMarkerFeedback_<std::allocator<void> > const> const&)>, unsigned char)'
@@ -249,5 +257,7 @@ make[1]: *** [m-explore/explore/CMakeFiles/gravity.dir/all] Error 2
 Makefile:140: recipe for target 'all' failed
 make: *** [all] Error 2
 ```
+
+- Weird Observation: while dragging the first marker (mouse held down), the other markers will disappear, until mouse is lifted. However, tried in int_marker node, this behaviour is not replicable.
 
 This error states that there is interactive marker constructor cannot be found. Most likely, you did not specify it in the `CMakeLists.txt` as required component. Please check your `CMakeLists.txt` and make sure all the specify dependencies in `package.xml` is in `find_package` and `catkin_package`.
